@@ -13,6 +13,7 @@ import com.example.android_notes.R
 class ViewExamples : AppCompatActivity() {
 
     private lateinit var bBackToMain: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
