@@ -11,14 +11,16 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.android_notes.activities.LocationActivity
 import com.example.android_notes.activities.MediaPlayerActivity
 import com.example.android_notes.activities.ViewExamples
+import com.example.android_notes.activities.SocketsActivity
 
 
 class MainActivity : AppCompatActivity() {
 
-    private var log_tag : String = "MY_LOG_TAG"
+    private var log_tag : String = "socket_activity"
     private lateinit var bGoToPlayerActivity: Button
     private lateinit var bViewExamples: Button
     private lateinit var bLocationExample: Button
+    private lateinit var bSocketsExample: Button
 
     // onCreate() – вызывается при первом создании Activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         bGoToPlayerActivity = findViewById<Button>(R.id.bPlayer)
         bViewExamples = findViewById<Button>(R.id.bViews)
         bLocationExample = findViewById<Button>(R.id.bLocation)
+        bSocketsExample = findViewById(R.id.bSockets)
     }
 
     // onResume() – вызывается перед тем как будет доступно для активности пользователя (взаимодействие)
@@ -56,6 +59,11 @@ class MainActivity : AppCompatActivity() {
 
         bLocationExample.setOnClickListener({
             val randomIntent = Intent(this, LocationActivity::class.java)
+            startActivity(randomIntent)
+        });
+
+        bSocketsExample.setOnClickListener({
+            val randomIntent = Intent(this, SocketsActivity::class.java)
             startActivity(randomIntent)
         });
     }

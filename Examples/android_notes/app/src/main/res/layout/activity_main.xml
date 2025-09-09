@@ -43,10 +43,10 @@
                 android:text="Location" />
 
             <Button
-                android:id="@+id/button9"
+                android:id="@+id/bTelephony"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="Telephony" />
         </TableRow>
 
         <TableRow
@@ -54,10 +54,10 @@
             android:layout_height="match_parent" >
 
             <Button
-                android:id="@+id/button10"
+                android:id="@+id/bSockets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="Sockets" />
 
             <Button
                 android:id="@+id/button11"
