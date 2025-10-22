@@ -60,10 +60,10 @@
                 android:text="Sockets" />
 
             <Button
-                android:id="@+id/button11"
+                android:id="@+id/bLifeCycle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Button" />
+                android:text="Life Cycle" />
 
             <Button
                 android:id="@+id/button12"

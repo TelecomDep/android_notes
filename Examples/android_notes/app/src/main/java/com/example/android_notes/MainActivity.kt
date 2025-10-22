@@ -1,6 +1,7 @@
 package com.example.android_notes
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -8,10 +9,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.android_notes.activities.LifeCycleActivity
 import com.example.android_notes.activities.LocationActivity
 import com.example.android_notes.activities.MediaPlayerActivity
 import com.example.android_notes.activities.ViewExamples
 import com.example.android_notes.activities.SocketsActivity
+import com.example.android_notes.activities.TelephonyActivity
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,7 +23,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bGoToPlayerActivity: Button
     private lateinit var bViewExamples: Button
     private lateinit var bLocationExample: Button
+    private lateinit var bTelephonyExample: Button
     private lateinit var bSocketsExample: Button
+    private lateinit var bLifeCycle : Button
 
     // onCreate() – вызывается при первом создании Activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,10 +40,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        bGoToPlayerActivity = findViewById<Button>(R.id.bPlayer)
-        bViewExamples = findViewById<Button>(R.id.bViews)
-        bLocationExample = findViewById<Button>(R.id.bLocation)
+        bGoToPlayerActivity = findViewById(R.id.bPlayer)
+        bViewExamples = findViewById(R.id.bViews)
+        bLocationExample = findViewById(R.id.bLocation)
+        bTelephonyExample = findViewById(R.id.bTelephony)
         bSocketsExample = findViewById(R.id.bSockets)
+        bLifeCycle = findViewById(R.id.bLifeCycle)
     }
 
     // onResume() – вызывается перед тем как будет доступно для активности пользователя (взаимодействие)
@@ -55,6 +62,7 @@ class MainActivity : AppCompatActivity() {
         bViewExamples.setOnClickListener({
             val randomIntent = Intent(this, ViewExamples::class.java)
             startActivity(randomIntent)
+            bViewExamples.setBackgroundColor(0xFF00FF00.toInt())
         });
 
         bLocationExample.setOnClickListener({
@@ -62,8 +70,18 @@ class MainActivity : AppCompatActivity() {
             startActivity(randomIntent)
         });
 
+        bTelephonyExample.setOnClickListener({
+            val randomIntent = Intent(this, TelephonyActivity::class.java)
+            startActivity(randomIntent)
+        });
+
         bSocketsExample.setOnClickListener({
             val randomIntent = Intent(this, SocketsActivity::class.java)
+            startActivity(randomIntent)
+        });
+
+        bLifeCycle.setOnClickListener({
+            val randomIntent = Intent(this, LifeCycleActivity::class.java)
             startActivity(randomIntent)
         });
     }

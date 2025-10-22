@@ -36,6 +36,8 @@ class ViewExamples : AppCompatActivity(), View.OnClickListener {
         bExample = findViewById(R.id.button)
         bExample2 = findViewById(R.id.button2)
         bExample3 = findViewById(R.id.button3)
+        tvView_01.setBackgroundColor(Color.rgb(255, 22, 10))
+        
 
     }
 

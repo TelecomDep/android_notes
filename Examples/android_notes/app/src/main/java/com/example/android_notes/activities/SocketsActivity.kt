@@ -1,7 +1,6 @@
 package com.example.android_notes.activities
 
 import android.os.Bundle
-import android.os.Message
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -42,22 +41,28 @@ class SocketsActivity : AppCompatActivity() {
         val socket = ZContext().createSocket(SocketType.REP)
         socket.bind("tcp://*:2222") // Replace with your server's IP and port
         var counter: Int = 0
+
+        // В бесконечном цикле ожидаем "привета" от клиента и отвечаем ему, если нужно
         while(true){
             counter++
+            // Получаем данные от Клиента
             val requestBytes = socket.recv(0)
             val request = String(requestBytes, ZMQ.CHARSET)
             println("[SERVER] Received request: [$request]")
+
+            // Здесь имитируется какая-то сложная работа
             handler.postDelayed({
                 tvSockets.text = "Received MSG from Client = $counter"
-            }, 0)
-            // Process the request (e.g., simulate work)
-            Thread.sleep(1000) // Simulate some work
+            }, 0) // Это безопасная работа с основным потоком UI Thread
+            Thread.sleep(1000)
+            // Закончили очень сложную работу
 
-            // Prepare and send the reply
+            // Подготавливаем и отправляем ответ Клиенту
             val response = "Hello from Android ZMQ Server!"
             socket.send(response.toByteArray(ZMQ.CHARSET), 0)
             println("[SERVER] Sent reply: [$response]")
         }
+        // Безопасно закрываем контекст и сокет.
         socket.close();
         context.close();
     }
@@ -65,7 +70,8 @@ class SocketsActivity : AppCompatActivity() {
     fun startClient() {
         val context = ZMQ.context(1)
         val socket = ZContext().createSocket(SocketType.REQ)
-        socket.connect("tcp://localhost:2222") // Replace with your server's IP and port
+        socket.connect("tcp://localhost:2222")
+        // Запрос на соединение с сервером
         val request = "Hello from Android client!"
         for(i in 0..10){
             socket.send(request.toByteArray(ZMQ.CHARSET), 0)
