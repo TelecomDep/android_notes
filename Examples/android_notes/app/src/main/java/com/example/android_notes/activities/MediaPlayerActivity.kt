@@ -2,6 +2,7 @@ package com.example.android_notes.activities
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.Manifest.permission.READ_MEDIA_IMAGES
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -29,31 +30,40 @@ class MediaPlayerActivity : AppCompatActivity() {
         }
 
 
-        // Define a requestPermessionLauncher using the RequestPermission contract
+        // Обработка резрешения на получение доступа к файлам
         val requestPermessionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
-            // Check if the permission is granted
             if (isGranted) {
-                // Show a toast message for permission granted
-                playMusic()
                 Toast.makeText(this, "Permission Granted", Toast.LENGTH_LONG).show()
             } else {
-                // Show a toast message asking the user to grant the permission
+                playMusic()
                 Toast.makeText(this, "Please grant permission", Toast.LENGTH_LONG).show()
             }
         }
         requestPermessionLauncher.launch(READ_MEDIA_IMAGES)
         requestPermessionLauncher.launch(READ_EXTERNAL_STORAGE)
+        // Target SDR = 22 || Android 5.0
 
     }
 
     private fun playMusic(){
         var musicPath: String = Environment.getExternalStorageDirectory().path + "/Music"
 
+
         Log.d (log_tag, "PATH: " + musicPath)
         var directory: File = File(musicPath)
+        //directory.isDirectory()
         directory.listFiles().forEach {
             Log.d (log_tag, it.toString())
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        var mediaPlayer = MediaPlayer.create(this, R.raw.test)
+        Log.d(log_tag, mediaPlayer.duration.toString())
+        mediaPlayer.start()
+
+
     }
 }
 

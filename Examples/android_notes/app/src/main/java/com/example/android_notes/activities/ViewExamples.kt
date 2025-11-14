@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
 import android.widget.Button
+import android.widget.ListView
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.android_notes.MainActivity
 import com.example.android_notes.R
 
+
 class ViewExamples : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var bBackToMain: Button
@@ -21,6 +25,8 @@ class ViewExamples : AppCompatActivity(), View.OnClickListener {
     private lateinit var bExample: Button
     private lateinit var bExample2: Button
     private lateinit var bExample3: Button
+    private lateinit var lvMyList: ListView
+    private lateinit var sbMySeekBar: SeekBar
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -36,6 +42,37 @@ class ViewExamples : AppCompatActivity(), View.OnClickListener {
         bExample = findViewById(R.id.button)
         bExample2 = findViewById(R.id.button2)
         bExample3 = findViewById(R.id.button3)
+        sbMySeekBar = findViewById(R.id.seekBarTest)
+
+        sbMySeekBar.setOnSeekBarChangeListener(object : OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                tvView_01.setText(progress.toString())
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+            }
+        })
+
+        // List View
+//        val names = arrayOf(
+//            "1", "2", "10", "Привет", "HelloWorld", "Stroka"
+//        )
+//        lvMyList = findViewById(R.id.myFirstListView)
+//
+//        // создаем адаптер
+//        val adapter = ArrayAdapter(
+//            this,
+//            android.R.layout.simple_list_item_1, names
+//        )
+//        lvMyList.adapter = adapter
+//        lvMyList.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+//            view.setBackgroundColor(Color.rgb(255, 22, 10))
+//        })
+
+
         tvView_01.setBackgroundColor(Color.rgb(255, 22, 10))
         
 

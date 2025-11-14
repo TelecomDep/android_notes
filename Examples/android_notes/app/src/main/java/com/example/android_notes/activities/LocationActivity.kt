@@ -1,28 +1,30 @@
 package com.example.android_notes.activities
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Bundle
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.android_notes.R
 import android.location.Location
+import android.location.LocationListener
 import android.location.LocationManager
+import android.os.Bundle
 import android.provider.Settings
 import android.util.Log
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.android_notes.MainActivity
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.example.android_notes.R
+import org.zeromq.ZMQ.context
 
-class LocationActivity : AppCompatActivity() {
+
+class LocationActivity : LocationListener, AppCompatActivity()  {
 
     val value: Int = 0
     val LOG_TAG: String = "LOCATION_ACTIVITY"
@@ -32,9 +34,11 @@ class LocationActivity : AppCompatActivity() {
         private const val PERMISSION_REQUEST_ACCESS_LOCATION= 100
     }
 
-    private lateinit var myFusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var locationManager: LocationManager
     private lateinit var tvLat: TextView
     private lateinit var tvLon: TextView
+    private lateinit var tvAppContext: TextView
+    private lateinit var tvActivityContext: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,28 +51,33 @@ class LocationActivity : AppCompatActivity() {
         }
         bBackToMain = findViewById<Button>(R.id.back_to_main)
 
-        myFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        locationManager = this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         tvLat = findViewById(R.id.tv_lat) as TextView
         tvLon = findViewById(R.id.tv_lon) as TextView
+        tvAppContext = findViewById(R.id.tv_appContext) as TextView
+        tvActivityContext = findViewById(R.id.tv_activityContext) as TextView
+
+        tvAppContext.setText(applicationContext.toString())
+        tvActivityContext.setText(this.toString())
 
     }
 
     override fun onResume() {
         super.onResume()
 
-        bBackToMain.setOnClickListener({
+        bBackToMain.setOnClickListener {
             val backToMain = Intent(this, MainActivity::class.java)
             startActivity(backToMain)
-        })
+        }
 
-        getCurrentLocation()
-
+        updateCurrentLocation()
     }
 
-    private fun getCurrentLocation(){
+    private fun updateCurrentLocation(){
 
         if(checkPermissions()){
             if(isLocationEnabled()){
+                // Android обязывает добавлять проверку на разрешения перед стартом LocationManager
                 if (ActivityCompat.checkSelfPermission(
                         this,
                         Manifest.permission.ACCESS_FINE_LOCATION
@@ -80,15 +89,20 @@ class LocationActivity : AppCompatActivity() {
                     requestPermissions()
                     return
                 }
-                myFusedLocationProviderClient.lastLocation.addOnCompleteListener(this){ task->
-                    val location: Location?=task.result
-                    if(location == null){
-                        Toast.makeText(applicationContext, "problems with signal", Toast.LENGTH_SHORT).show()
-                    } else {
-                        tvLat.setText(location.latitude.toString())
-                        tvLon.setText(location.longitude.toString())
-                    }
-                }
+                //GPS_PROVIDER
+                locationManager.requestLocationUpdates(
+                    LocationManager.GPS_PROVIDER,
+                    1000L,
+                    1f,
+                    this
+                )
+                //NETWORK_PROVIDER
+//                locationManager.requestLocationUpdates(
+//                    LocationManager.NETWORK_PROVIDER,
+//                    1000L,
+//                    1f,
+//                    this
+//                )
 
             } else{
                 // open settings to enable location
@@ -135,7 +149,7 @@ class LocationActivity : AppCompatActivity() {
         {
             if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 Toast.makeText(applicationContext, "Permission granted", Toast.LENGTH_SHORT).show()
-                getCurrentLocation()
+                updateCurrentLocation()
             } else {
                 Toast.makeText(applicationContext, "Denied by user", Toast.LENGTH_SHORT).show()
             }
@@ -143,8 +157,12 @@ class LocationActivity : AppCompatActivity() {
     }
 
     private fun isLocationEnabled(): Boolean{
-        val locationManager:LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
 
+    // Переопределенный метод интерфейса LocationListener
+    override fun onLocationChanged(location: Location) {
+        tvLat.setText(location.latitude.toString())
+        tvLon.setText(location.longitude.toString())
     }
 }

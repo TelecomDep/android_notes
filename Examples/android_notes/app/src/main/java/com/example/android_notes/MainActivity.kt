@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity() {
         bTelephonyExample = findViewById(R.id.bTelephony)
         bSocketsExample = findViewById(R.id.bSockets)
         bLifeCycle = findViewById(R.id.bLifeCycle)
+
+        Log.d (log_tag, applicationContext.toString())
     }
 
     // onResume() – вызывается перед тем как будет доступно для активности пользователя (взаимодействие)
