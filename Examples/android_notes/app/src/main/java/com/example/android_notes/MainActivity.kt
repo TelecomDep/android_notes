@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.android_notes.activities.LifeCycleActivity
 import com.example.android_notes.activities.LocationActivity
 import com.example.android_notes.activities.MediaPlayerActivity
+import com.example.android_notes.activities.ServiceActivity
 import com.example.android_notes.activities.ViewExamples
 import com.example.android_notes.activities.SocketsActivity
 import com.example.android_notes.activities.TelephonyActivity
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var bTelephonyExample: Button
     private lateinit var bSocketsExample: Button
     private lateinit var bLifeCycle : Button
+    private lateinit var bSerivce : Button
 
     // onCreate() – вызывается при первом создании Activity
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,12 +42,13 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        bGoToPlayerActivity = findViewById(R.id.bPlayer)
-        bViewExamples = findViewById(R.id.bViews)
-        bLocationExample = findViewById(R.id.bLocation)
-        bTelephonyExample = findViewById(R.id.bTelephony)
-        bSocketsExample = findViewById(R.id.bSockets)
-        bLifeCycle = findViewById(R.id.bLifeCycle)
+        bGoToPlayerActivity =   findViewById(R.id.bPlayer)
+        bViewExamples =         findViewById(R.id.bViews)
+        bLocationExample =      findViewById(R.id.bLocation)
+        bTelephonyExample =     findViewById(R.id.bTelephony)
+        bSocketsExample =       findViewById(R.id.bSockets)
+        bLifeCycle =            findViewById(R.id.bLifeCycle)
+        bSerivce =              findViewById(R.id.bService)
 
         Log.d (log_tag, applicationContext.toString())
     }
@@ -84,6 +87,11 @@ class MainActivity : AppCompatActivity() {
 
         bLifeCycle.setOnClickListener({
             val randomIntent = Intent(this, LifeCycleActivity::class.java)
+            startActivity(randomIntent)
+        });
+
+        bSerivce.setOnClickListener({
+            val randomIntent = Intent(this, ServiceActivity::class.java)
             startActivity(randomIntent)
         });
     }

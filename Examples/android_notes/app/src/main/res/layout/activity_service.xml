@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ServiceActivity">
+
+    <Button
+        android:id="@+id/bStartBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="75dp"
+        android:text="Start bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/bStopBg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="44dp"
+        android:text="Stop bg"
+        app:layout_constraintStart_toStartOf="@+id/bStartBg"
+        app:layout_constraintTop_toBottomOf="@+id/bStartBg" />
+
+    <TextView
+        android:id="@+id/tvDataFromService"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="86dp"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="@+id/bStopBg"
+        app:layout_constraintTop_toBottomOf="@+id/bStopBg" />
+</androidx.constraintlayout.widget.ConstraintLayout>
